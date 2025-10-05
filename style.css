@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.birthday-page {
+  background: linear-gradient(135deg, #ffd6e7, #fbb1d3);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Card */
+.card {
+  background: #ffe4f1;
+  padding: 25px;
+  border-radius: 20px;
+  border: 4px solid #ff69b4;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: colorPulse 4s infinite ease-in-out;
+  z-index: 10;
+}
+
+.card h2 {
+  font-size: 1.8rem;
+  color: #e91e63;
+  margin-bottom: 10px;
+  animation: textPulse 3s infinite ease-in-out;
+}
+
+.card p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 15px;
+  animation: textPulse 3.5s infinite ease-in-out;
+}
+
+@keyframes colorPulse {
+  0% {
+    background: #ffe4f1;
+  }
+
+  50% {
+    background: #ffcce0;
+  }
+
+  100% {
+    background: #ffe4f1;
+  }
+}
+
+@keyframes textPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+    color: #ff4081;
+  }
+}
+
+/* Cat */
+.cat {
+  width: 180px;
+  margin-top: 15px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Falling items */
+.falling {
+  position: absolute;
+  top: -50px;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  animation: fall linear forwards;
+  z-index: 5;
+}
+
+.falling.bubble {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px) rotate(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Loading Spinners */
+.loading-spinner {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border: 10px solid rgba(255, 255, 255, 0.5);
+  border-top: 10px solid #ff69b4;
+  border-radius: 50%;
+  animation: spin 4s linear infinite;
+  opacity: 0.8;
+}
+
+.loading-spinner.right-top {
+  top: 10%;
+  right: 10%;
+}
+
+.loading-spinner.left-bottom {
+  bottom: 10%;
+  left: 10%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

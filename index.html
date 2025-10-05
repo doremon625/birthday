@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loading...</title>
+  <link rel="stylesheet" href="loadingstyle.css">
+</head>
+<body class="loading-page">
+  <div class="container" id="container">
+    <!-- Loading Spinners -->
+    <div class="loading-spinner right-top"></div>
+    <div class="loading-spinner left-bottom"></div>
+
+    <!-- Card Message -->
+    <div class="card" id="messageCard">
+      <span>🌟 I have something <span class="highlight">special</span> for you 🌟</span>
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById('container');
+
+    // Create bubbles
+    function createBubble() {
+      const bubble = document.createElement('div');
+      bubble.className = "bubble";
+      const size = Math.random() * 80 + 20; 
+      bubble.style.width = size + "px";
+      bubble.style.height = size + "px";
+      bubble.style.left = Math.random() * 100 + "vw";
+      bubble.style.animationDuration = (Math.random() * 10 + 8) + "s";
+      container.appendChild(bubble);
+      setTimeout(() => bubble.remove(), 20000);
+    }
+    setInterval(createBubble, 400);
+
+    // Redirect after 5s
+    setTimeout(() => {
+      window.location.href = "birthday.html";
+    }, 5000);
+  </script>
+</body>
+</html>

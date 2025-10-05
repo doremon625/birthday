@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎀 Send Your Wish to Soha 🎀</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      padding: 35px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      width: 350px;
+      text-align: center;
+      animation: bounceIn 1.5s ease;
+      z-index: 2;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.8) translateY(-30px); opacity: 0; }
+      50% { transform: scale(1.05) translateY(10px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); }
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #e91e63;
+      box-shadow: 0 0 8px rgba(233, 30, 99, 0.3);
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(45deg, #ff4081, #f50057);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      animation: bounceBtn 2s infinite;
+    }
+
+    @keyframes bounceBtn {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #f50057, #ff4081);
+      box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);
+    }
+
+    footer {
+      margin-top: 20px;
+      color: white;
+      font-size: 0.9rem;
+      text-align: center;
+      z-index: 2;
+    }
+
+    /* Thank You Screen */
+    #thankYouScreen {
+      display: none; /* hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: red;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-size: 2rem;
+      animation: fadeIn 1s ease;
+      z-index: 999;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Red hearts background for thank you */
+    #thankYouScreen::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(red 4px, transparent 4px);
+      background-size: 50px 50px;
+      opacity: 0.15;
+      animation: moveHearts 4s linear infinite;
+    }
+
+    @keyframes moveHearts {
+      from { background-position: 0 0; }
+      to { background-position: 100px 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Form Section -->
+  <div class="container" id="formContainer">
+    <h2>🎀 Send Your Wish to Soha 🎀</h2>
+    <form id="wish-form">
+      <input type="text" id="name" name="from_name" placeholder="Your Name" required />
+      <textarea id="message" name="message" placeholder="Write your wish..." rows="4" required></textarea>
+      <button type="submit">Send Wish 💌</button>
+    </form>
+  </div>
+
+  <!-- Thank You Screen -->
+  <div id="thankYouScreen">
+    ❤️ Thank You for Your Wish ❤️
+  </div>
+
+  <footer>Made with 💖 for Soha</footer>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("YOg4SUnF5tF_p1nCG"); // 🔑 Replace with your EmailJS Public Key
+    })();
+
+    const form = document.getElementById("wish-form");
+    const thankYouScreen = document.getElementById("thankYouScreen");
+    const formContainer = document.getElementById("formContainer");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+
+      // Send email using EmailJS
+      emailjs.send("service_p0xq7rd", "template_t17sir7", {
+        from_name: name,
+        message: message,
+      }).then(() => {
+        console.log("Email sent successfully!");
+
+        // Show Thank You screen only after sending
+        formContainer.style.display = "none";
+        thankYouScreen.style.display = "flex";
+
+        // After 10 seconds, revert back to form
+        setTimeout(() => {
+          thankYouScreen.style.display = "none";
+          formContainer.style.display = "block";
+          form.reset();
+        }, 10000);
+
+      }).catch(err => {
+        console.error("Error sending email:", err);
+        alert("Something went wrong. Please try again later.");
+      });
+    });
+  </script>
+</body>
+</html>

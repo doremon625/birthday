@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Cake Animation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #a46cf2 0%, #6a11cb 50%, #a46cf2 100%);
+      --cake-bottom: #ffb6c1;
+      --cake-middle: #ffe4b5;
+      --cake-top: #add8e6;
+      --icing: #fff;
+      --candle: #fff;
+      --flame: #ff8c00;
+      --text-gradient: linear-gradient(90deg, #ff7eb3, #f9f871, #65d6ce);
+      --shadow: rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-gradient);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      position: relative;
+      flex-direction: column;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Background particles */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: twinkle 4s infinite ease-in-out;
+    }
+
+    .particle.small {
+      width: 2px;
+      height: 2px;
+    }
+
+    .particle.medium {
+      width: 4px;
+      height: 4px;
+    }
+
+    .particle.large {
+      width: 6px;
+      height: 6px;
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.5);
+      }
+    }
+
+    /* Cake */
+    .cake-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 15;
+      transform: translateY(200vh);
+      animation: riseCake 3s ease-out forwards, bounceCake 3s ease-in-out infinite 3s;
+    }
+
+    @keyframes riseCake {
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounceCake {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .layer {
+      border-radius: 10px;
+      box-shadow: 0 5px 15px var(--shadow);
+      position: relative;
+    }
+
+    .layer.bottom {
+      width: 260px;
+      height: 70px;
+      background: var(--cake-bottom);
+    }
+
+    .layer.middle {
+      width: 200px;
+      height: 60px;
+      background: var(--cake-middle);
+      margin-top: -15px;
+    }
+
+    .layer.top {
+      width: 140px;
+      height: 50px;
+      background: var(--cake-top);
+      margin-top: -15px;
+    }
+
+    .layer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: var(--icing);
+      border-bottom-left-radius: 50%;
+      border-bottom-right-radius: 50%;
+      box-shadow: inset 0 -5px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Candles */
+    .candles {
+      display: flex;
+      justify-content: center;
+      margin-bottom: -10px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .candle {
+      width: 10px;
+      height: 30px;
+      background: var(--candle);
+      margin: 0 6px;
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .candle::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 15px;
+      background: var(--flame);
+      border-radius: 50%;
+      animation: flicker 0.3s infinite alternate;
+      box-shadow: 0 0 10px var(--flame);
+    }
+
+    @keyframes flicker {
+      from {
+        transform: translateX(-50%) scale(1);
+        opacity: 0.9;
+      }
+
+      to {
+        transform: translateX(-50%) scale(1.2);
+        opacity: 0.7;
+      }
+    }
+
+    /* Text */
+    .birthday-text {
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      background: var(--text-gradient);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+      margin-top: 20px;
+    }
+
+    .birthday-text.show {
+      opacity: 1;
+      transform: translateY(0);
+      animation: pulseText 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseText {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-5px) scale(1.05);
+      }
+    }
+
+    /* Surprise Button */
+    .surprise-btn {
+      margin-top: 25px;
+      padding: 12px 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(90deg, #ff7eb3, #f9f871, #65d6ce);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 126, 179, 0.6);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: showBtn 1s ease forwards;
+      animation-delay: 6s;
+      z-index: 20;
+    }
+
+    .surprise-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(249, 248, 113, 0.9);
+    }
+
+    @keyframes showBtn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Cake -->
+  <div class="cake-container" id="cake">
+    <div class="candles">
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+    </div>
+    <div class="layer top"></div>
+    <div class="layer middle"></div>
+    <div class="layer bottom"></div>
+    <div class="birthday-text" id="bText">🎉 Happy Birthday Soha 🎉</div>
+    <button class="surprise-btn">🎁 Surprise</button>
+  </div>
+
+  <script>
+    // Particles
+    function createParticles() {
+      const container = document.getElementById('particles');
+      const sizes = ['small', 'medium', 'large'];
+      for (let i = 0; i < 80; i++) {
+        const p = document.createElement('div');
+        p.className = `particle ${sizes[Math.floor(Math.random() * sizes.length)]}`;
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 4 + 's';
+        container.appendChild(p);
+      }
+    }
+    createParticles();
+
+    // Text show after 5s
+    setTimeout(() => {
+      document.getElementById('bText').classList.add('show');
+    }, 5000);
+  </script>
+  <script>
+    setTimeout(() => {
+      window.location.href = "wish.html"; // ye 2nd page open karega
+    }, 5000);
+  </script>
+</body>
+
+</html>
